@@ -28,18 +28,21 @@ public class wordle {
         
         Scanner input = new Scanner(System.in);
 
-        System.out.println(randomw+randomn);
         System.out.println("""
         !STILL IN TESTING!
         Rules:
-        1. Guess an English word per guess with maximum of 6.
+        1. Guess an English word with maximum of 6 guesses.
         2. '>...<' beside your letter in a box means your letter included in the answer but in wrong position.
         3. Lower cased and no additional things of your word's letter means not included in the word answer.
         4. Upper cased letter means your letter of your word is correct.
         5. Input a valid word to answer.
 
+        If display of the Wordle's table bugged, it's a visual bug caused by scrolling in terminal, so no worries.
+
         """);
-        System.out.println(randomw);
+        for (int y = 0;  y< display.size(); y++) {
+            System.out.println(display.get(y));
+        }
         while (guesses<6){
             System.out.println("Guess a 5 letter word:");
             guess = input.next();
@@ -64,7 +67,7 @@ public class wordle {
                     System.out.println(display.get(y));
                 }
                 if (guess.equals(randomw)) {
-                    System.out.println("\nYou got the right answer!");
+                    System.out.println("\nYou guessed the right answer!");
                     System.exit(0);
                 }
             }
