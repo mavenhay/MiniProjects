@@ -39,7 +39,7 @@ public class wordle {
         5. Input a valid word to answer.
 
         """);
-        
+        System.out.println(randomw);
         while (guesses<6){
             System.out.println("Guess a 5 letter word:");
             guess = input.next();
@@ -62,6 +62,10 @@ public class wordle {
                 }
                 for (int y = 0;  y< display.size(); y++) {
                     System.out.println(display.get(y));
+                }
+                if (guess.equals(randomw)) {
+                    System.out.println("\nYou got the right answer!");
+                    System.exit(0);
                 }
             }
         }
