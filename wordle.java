@@ -23,8 +23,8 @@ public class wordle {
         "==============================="));
         Random rng = new Random();
         int randomn = rng.nextInt(5757), guesses = 0;
-        String randomw = words.get(randomn), guess ="", randw1, reveal;
-        ArrayList<String> check = new ArrayList<>(), ansList = new ArrayList<>();;
+        String randomw = words.get(randomn), guess ="", randw1, reveal, bls="Blacklisted letter: ";
+        ArrayList<String> check = new ArrayList<>(), ansList = new ArrayList<>(), blacklisted = new ArrayList<>();
         
         Scanner input = new Scanner(System.in);
 
@@ -37,7 +37,7 @@ public class wordle {
         4. Upper cased letter means your letter of your word is correct.
         5. Input a valid word to answer.
 
-        If display of the Wordle's table bugged, it's a visual bug caused by scrolling in terminal, so no worries.
+        If display of the Wordle's table bugged, it's a visual bug caused by changing terminal size, so no worries.
 
         """);
         for (int y = 0;  y< display.size(); y++) {
@@ -58,7 +58,7 @@ public class wordle {
                     randw1 = (i==4) ?  randomw.substring(4): randomw.substring(i,i+1);
                     check.add(randw1);
                 }
-                ansList.add(sub(guess,randomw,check));
+                ansList.add(sub(guess,randomw,check,blacklisted));
                 for(int bs=0; bs<guesses; bs++){
                     display.remove(1+bs*2);
                     display.add(1+bs*2, ansList.get(bs));
@@ -66,6 +66,12 @@ public class wordle {
                 for (int y = 0;  y< display.size(); y++) {
                     System.out.println(display.get(y));
                 }
+                bls="Blacklisted letter: ";
+                for (int v = 0; v < blacklisted.size(); v++) {
+                    String com = (v==blacklisted.size()-1) ? "" : ", ";
+                    bls += blacklisted.get(v)+com;
+                }
+                System.out.println(bls);
                 if (guess.equals(randomw)) {
                     System.out.println("\nYou guessed the right answer!");
                     System.exit(0);
@@ -79,7 +85,7 @@ public class wordle {
             System.out.println("The answer is: "+randomw);
         }
     }
-    public static String sub(String guess, String ans, ArrayList check){
+    public static String sub(String guess, String ans, ArrayList check, ArrayList blackl){
         String save = "", disp, g2 = "";
         for (int num = 0; num <= 4; num++) {
             g2 = guess.substring(num, num+1);
@@ -91,6 +97,9 @@ public class wordle {
                 check.remove(g2);
                 save += "| >"+ g2 + disp;
             } else {
+                if (!blackl.contains(g2.toUpperCase())) {
+                    blackl.add(g2.toUpperCase());
+                }
                 disp = (num==4) ? "  |" : "  ";
                 save += "|  "+ g2 +disp;
             }
